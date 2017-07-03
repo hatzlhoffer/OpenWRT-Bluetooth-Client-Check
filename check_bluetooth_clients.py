@@ -41,10 +41,10 @@ class Connection(object):
 
         return response["result"][1]
 
-    def interface_clients(self, interface):
+    def bluetooth_clients(self, btaddr):
         subsytem = "bluetooth"
         method = "check_client"
-        result = self._request(subsytem, method, bt_address=interface)
+        result = self._request(subsytem, method, bt_address=btaddr)
         assert "clients" in result
 
         return result["clients"].values()
@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     clients = []
     connection = Connection(sys.argv[1], sys.argv[2], sys.argv[3])
-    for interface in sys.argv[4:]:
-        clients.extend(connection.interface_clients(interface))
+    for btaddr in sys.argv[4:]:
+        clients.extend(connection.bluetooth_clients(btaddr))
 
     print(", ".join(clients))
